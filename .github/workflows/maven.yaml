@@ -41,14 +41,14 @@ jobs:
 
       - name: Upload Test Results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: target/surefire-reports
 
       - name: Upload Coverage Report
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jacoco-report
           path: target/site/jacoco
@@ -58,12 +58,3 @@ jobs:
         with:
           name: Package
           path: staging
-
-  trigger-subworkflows:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger Security Worflow
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: "security.yaml"

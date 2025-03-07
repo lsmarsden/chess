@@ -1,0 +1,32 @@
+package org.example.pieces;
+
+import org.example.Board;
+import org.example.Colour;
+import org.example.Position;
+
+public class Knight extends Piece {
+    public Knight(Colour colour) {
+        super(colour);
+    }
+
+    @Override
+    protected boolean canPieceMove(Position from, Position to, Board board) {
+        return Math.abs(from.getX() - to.getX()) * Math.abs(from.getY() - to.getY()) == 2;
+    }
+
+    @Override
+    public String getName() {
+        return "Knight";
+    }
+
+
+    @Override
+    public char getSymbol() {
+        return 'N';
+    }
+
+    @Override
+    protected boolean canJump() {
+        return true;
+    }
+}

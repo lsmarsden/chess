@@ -1,0 +1,49 @@
+name: Versioning & Tagging
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensures all tags are available
+
+      - name: Get Latest Version
+        id: version
+        run: echo "VERSION=$(git describe --tags --abbrev=0 || echo '0.0.0')" >> $GITHUB_ENV
+
+      - name: Determine New Version
+        id: new_version
+        run: |
+          if git log -1 --pretty=%B | grep -q 'BREAKING CHANGE:'; then
+            NEW_VERSION=$(echo $VERSION | awk -F. '{print $1+1".0.0"}')
+          elif git log -1 --pretty=%B | grep -q 'feat:'; then
+            NEW_VERSION=$(echo $VERSION | awk -F. '{print $1"."$2+1".0"}')
+          else
+            NEW_VERSION=$(echo $VERSION | awk -F. '{print $1"."$2"."$3+1}')
+          fi
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "Next version: $NEW_VERSION"
+
+      - name: Update pom.xml Version
+        run: |
+          mvn versions:set -DnewVersion=${{ env.NEW_VERSION }} -DgenerateBackupPoms=false
+
+      - name: Commit Updated Version Files
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add pom.xml
+          git commit -m "chore: bump version to ${{ env.NEW_VERSION }}" || exit 0
+          git push origin main
+
+      - name: Create New Tag
+        run: |
+          git tag -a v${{ env.NEW_VERSION }} -m "Version ${{ env.NEW_VERSION }}"
+          git push origin v${{ env.NEW_VERSION }}

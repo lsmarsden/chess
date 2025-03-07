@@ -1,0 +1,23 @@
+name: Security Scan
+
+on:
+  workflow_run:
+    workflows: [ "Build & Test" ]
+    types:
+      - completed
+  schedule:
+    - cron: "0 4 * * 1,4"
+
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+      || github.event_name == 'schedule'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: OWASP Dependency Check
+        run: mvn org.owasp:dependency-check-maven:check

@@ -44,6 +44,6 @@ public abstract class Piece {
     }
 
     protected boolean isSamePlayerPiece(Position position, Board board) {
-        return board.getPiece(position) instanceof Piece p && p.getColour() == colour;
+        return board.getPiece(position) != null && board.getPiece(position).getColour() == colour;
     }
 }

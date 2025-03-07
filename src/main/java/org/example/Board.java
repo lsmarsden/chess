@@ -133,7 +133,8 @@ public class Board {
     private boolean isSquareUnderAttack(Position pos, Colour player) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (board[i][j] instanceof Piece piece
+                Piece piece = board[i][j];
+                if (piece != null
                         && piece.getColour() != player
                         && piece.canMove(new Position(i, j), pos, this)) {
                     return true;

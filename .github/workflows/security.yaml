@@ -35,9 +35,8 @@ jobs:
         id: version
         uses: ./.github/actions/get-version
 
-      - name: Upload Security Reports
-        uses: ./.github/workflows/upload-report.yml
+      - name: Deploy Report
+        uses: ./.github/workflows/deploy-report.yml
         with:
-          report_name: "security"
-          source_dir: "target/dependency-check-report"
-          version: "${{ env.VERSION }}"
+          report_path: target/dependency-check-report/
+          report_name: owasp

@@ -35,19 +35,17 @@ jobs:
         id: version
         uses: ./.github/actions/get-version
 
-      - name: Upload Test Reports
-        uses: ./.github/workflows/upload-report.yml
+      - name: Deploy Test Report
+        uses: ./.github/workflows/deploy-report.yml
         with:
-          report_name: "tests"
-          source_dir: "target/reports"
-          version: "${{ env.VERSION }}"
+          report_path: target/reports/
+          report_name: tests
 
-      - name: Upload Coverage Report
-        uses: ./.github/workflows/upload-report.yml
+      - name: Deploy Coverage Report
+        uses: ./.github/workflows/deploy-report.yml
         with:
-          report_name: "coverage"
-          source_dir: "target/site/jacoco"
-          version: "${{ env.VERSION }}"
+          report_path: target/site/jacoco/
+          report_name: coverage
 
       - name: Upload jar
         uses: actions/upload-artifact@v4

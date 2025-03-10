@@ -29,6 +29,7 @@ runs:
       continue-on-error: true  # If it's the first deploy, there might be no artifact yet
 
     - name: Debug File Structure
+      shell: bash
       run: ls -R target/ || echo "target directory does not exist"
 
     - name: Copy New Report

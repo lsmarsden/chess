@@ -30,3 +30,14 @@ jobs:
 
       - name: OWASP Dependency Check
         run: mvn org.owasp:dependency-check-maven:check -DnvdApiKey=${{ secrets.NVD_API_KEY }}
+
+      - name: Get Latest Version
+        id: version
+        uses: ./.github/actions/get-version
+
+      - name: Upload Security Reports
+        uses: ./.github/workflows/upload-report.yml
+        with:
+          report_name: "security"
+          source_dir: "target/dependency-check-report"
+          version: "${{ env.VERSION }}"

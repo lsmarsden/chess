@@ -31,6 +31,24 @@ jobs:
       - name: Build with Maven
         run: mvn -B clean verify --file pom.xml
 
+      - name: Get Latest Version
+        id: version
+        uses: ./.github/actions/get-version
+
+      - name: Upload Test Reports
+        uses: ./.github/workflows/upload-report.yml
+        with:
+          report_name: "tests"
+          source_dir: "target/reports"
+          version: "${{ env.VERSION }}"
+
+      - name: Upload Coverage Report
+        uses: ./.github/workflows/upload-report.yml
+        with:
+          report_name: "coverage"
+          source_dir: "target/site/jacoco"
+          version: "${{ env.VERSION }}"
+
       - name: Upload jar
         uses: actions/upload-artifact@v4
         with:
@@ -49,22 +67,3 @@ jobs:
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
 
-      - name: Upload Test Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: target/surefire-reports
-
-      - name: Upload Coverage Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: jacoco-report
-          path: target/site/jacoco
-
-      - run: mkdir staging && cp target/*.jar staging
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Package
-          path: staging

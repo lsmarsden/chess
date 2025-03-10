@@ -1,0 +1,13 @@
+name: "Get Latest Version"
+description: "Fetches the latest semantic version tag"
+outputs:
+  version:
+    description: "Latest semantic version tag"
+    value: ${{ steps.get_version.outputs.version }}
+runs:
+  using: "composite"
+  steps:
+    - name: Get Latest Version
+      id: get_version
+      run: echo "version=$(git describe --tags --abbrev=0 --match 'v*')" >> $GITHUB_ENV
+      shell: bash

@@ -53,6 +53,19 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.5.2</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report-only</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.4.2</version>
                 <configuration>
@@ -70,6 +83,7 @@
                 <version>12.1.0</version>
                 <configuration>
                     <dataDirectory>/tmp/owasp</dataDirectory>
+                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
                     <formats>
                         <format>html</format>
                         <format>json</format>

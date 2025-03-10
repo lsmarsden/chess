@@ -22,7 +22,7 @@ runs:
       shell: bash
       run: |
         mkdir -p reports/${{ inputs.report_name }}
-        cp -r ${{ inputs.report_path }}/ reports/${{ inputs.report_name }}
+        cp -R ${{ inputs.report_path }}/. reports/${{ inputs.report_name }}
 
     - name: Regenerate Index.html
       shell: bash

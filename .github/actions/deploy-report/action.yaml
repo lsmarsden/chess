@@ -18,10 +18,10 @@ runs:
       id: artifact-exists
       uses: LIT-Protocol/artifact-exists-action@v0
       with:
-        name: "reports"
+        name: github-pages
 
     - name: Download Existing Reports
-      if: ${{ artifact-exists.outputs.exists }}
+      if: ${{ steps.artifact-exists.outputs.exists == true }}
       uses: actions/download-artifact@v4
       with:
         name: github-pages

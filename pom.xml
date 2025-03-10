@@ -6,7 +6,7 @@
 
     <groupId>org.example</groupId>
     <artifactId>chess</artifactId>
-    <version>v0.0.17</version>
+    <version>v0.0.18</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

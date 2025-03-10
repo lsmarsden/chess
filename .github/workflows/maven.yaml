@@ -31,6 +31,10 @@ jobs:
       - name: Build with Maven
         run: mvn -B clean verify --file pom.xml
 
+      - name: Debug File Structure
+        shell: bash
+        run: ls -R target/ || echo "target directory does not exist"
+
       - name: Get Latest Version
         id: version
         uses: ./.github/actions/get-version

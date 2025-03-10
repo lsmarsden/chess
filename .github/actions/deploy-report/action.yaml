@@ -1,0 +1,45 @@
+name: "Deploy Report to GitHub Pages"
+description: "Uploads a report to GitHub Pages and updates index.html"
+inputs:
+  report_path:
+    description: "Path to the report to be copied"
+    required: true
+  report_name:
+    description: "Name of the report directory"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Download Existing Reports
+      uses: actions/download-artifact@v3
+      with:
+        name: github-pages
+        path: reports/
+      continue-on-error: true  # If it's the first deploy, there might be no artifact yet
+
+    - name: Copy New Report
+      shell: bash
+      run: |
+        mkdir -p reports/${{ inputs.report_name }}
+        cp -r ${{ inputs.report_path }} reports/${{ inputs.report_name }}
+
+    - name: Regenerate Index.html
+      shell: bash
+      run: |
+        echo "<!DOCTYPE html>" > reports/index.html  
+        echo "<html><head><title>Test Reports</title></head><body>" >> reports/index.html  
+        echo "<h1>Test Reports</h1><ul>" >> reports/index.html  
+        for d in reports/*/; do  
+          dir=$(basename "$d")  
+          echo "<li><a href='$dir/index.html'>$dir Report</a></li>" >> reports/index.html  
+        done  
+        echo "</ul></body></html>" >> reports/index.html  
+
+    - name: Upload Updated Reports to GitHub Pages
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'reports/'

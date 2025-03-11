@@ -7,6 +7,10 @@ inputs:
   report_name:
     description: "Name of the report directory"
     required: true
+  report_file:
+    description: "Name of the report file to be used as the report link in Github Pages."
+    required: false
+    default: "index.html"
 
 runs:
   using: "composite"
@@ -23,6 +27,11 @@ runs:
       run: |
         mkdir -p reports/${{ inputs.report_name }}
         cp -R ${{ inputs.report_path }}/. reports/${{ inputs.report_name }}
+        
+        # Rename specified report file to index.html
+        if [[ -f "reports/${{ inputs.report_name }}/${{ inputs.report_file }}" ]]; then
+          mv "reports/${{ inputs.report_name }}/${{ inputs.report_file }}" "reports/${{ inputs.report_name }}/index.html"
+        fi
 
     - name: Regenerate Index.html
       shell: bash

@@ -1,10 +1,6 @@
 name: Security Scan
 
 on:
-  workflow_run:
-    workflows: [ "Build & Test" ]
-    types:
-      - completed
   schedule:
     - cron: "0 4 * * 1,4"
 
@@ -12,9 +8,6 @@ on:
 jobs:
   security-scan:
     runs-on: ubuntu-latest
-    if: >-
-      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
-      || github.event_name == 'schedule'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -27,16 +20,12 @@ jobs:
           restore-keys: |
             owasp-db-${{ runner.os }}-
 
-
       - name: OWASP Dependency Check
         run: mvn org.owasp:dependency-check-maven:check -DnvdApiKey=${{ secrets.NVD_API_KEY }}
-
-      - name: Get Latest Version
-        id: version
-        uses: ./.github/actions/get-version
 
       - name: Deploy Report
         uses: ./.github/actions/deploy-report
         with:
-          report_path: target/dependency-check-report/
+          report_path: target/classes/
           report_name: owasp
+          report_file: 'dependency-check-report.html'

@@ -50,7 +50,7 @@ runs:
         
         for d in reports/*/; do
         dir=$(basename "$d")
-        timestamp=$(stat -c %y "$d" | cut -d' ' -f1) # Get last modified date
+        timestamp=$(stat -c %y "$d" | cut -d' ' -f1) # last modified date
         echo "<tr><td><a href='$dir/index.html'>$dir Report</a></td><td>$timestamp</td></tr>" >> reports/index.html
         done
         echo "</table></body></html>" >> reports/index.html

@@ -6,7 +6,7 @@
 
     <groupId>org.example</groupId>
     <artifactId>chess</artifactId>
-    <version>v0.0.18</version>
+    <version>v0.1.0</version>
 
     <properties>
         <allure.version>2.29.1</allure.version>

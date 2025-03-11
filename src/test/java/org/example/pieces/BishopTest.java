@@ -1,5 +1,9 @@
 package org.example.pieces;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.example.Colour;
 import org.example.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+@Story("Bishop")
 class BishopTest extends PieceTestBase<Bishop> {
 
     private Bishop underTest = new Bishop(Colour.BLACK);
@@ -29,6 +34,7 @@ class BishopTest extends PieceTestBase<Bishop> {
     }
 
     @Nested
+    @Story("White Bishop Movement")
     class White {
 
         @BeforeEach
@@ -40,6 +46,8 @@ class BishopTest extends PieceTestBase<Bishop> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white bishop moves correctly when unobstructed")
         void testUnobstructedMovement() {
             // set up
             clearPositions(List.of(
@@ -61,6 +69,8 @@ class BishopTest extends PieceTestBase<Bishop> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white bishop is blocked by pieces of the same color")
         void testBlockedBySameColour() {
             // set up
             board.setPiece(new Position(3, 3), new Bishop(Colour.WHITE));
@@ -76,6 +86,8 @@ class BishopTest extends PieceTestBase<Bishop> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white bishop can capture opponent pieces")
         void testCanCaptureOpponent() {
             // set up
             board.setPiece(new Position(3, 3), new Bishop(Colour.BLACK));
@@ -93,6 +105,7 @@ class BishopTest extends PieceTestBase<Bishop> {
     }
 
     @Nested
+    @Story("Black Bishop Movement")
     class Black {
 
         @BeforeEach
@@ -104,6 +117,8 @@ class BishopTest extends PieceTestBase<Bishop> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black bishop moves correctly when unobstructed")
         void testUnobstructedMovement() {
             // set up
             clearPositions(List.of(
@@ -123,6 +138,8 @@ class BishopTest extends PieceTestBase<Bishop> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black bishop is blocked by pieces of the same color")
         void testBlockedBySameColour() {
             // set up
             board.setPiece(new Position(3, 3), new Bishop(Colour.BLACK));
@@ -138,6 +155,8 @@ class BishopTest extends PieceTestBase<Bishop> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black bishop can capture opponent pieces")
         void testCanCaptureOpponent() {
             // set up
             board.setPiece(new Position(3, 3), new Bishop(Colour.WHITE));

@@ -1,5 +1,9 @@
 package org.example.pieces;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.example.Colour;
 import org.example.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
+@Story("Pawn")
 class PawnTest extends PieceTestBase<Pawn> {
 
     private Pawn underTest = new Pawn(Colour.BLACK);
@@ -29,6 +34,7 @@ class PawnTest extends PieceTestBase<Pawn> {
     }
 
     @Nested
+    @Story("White Pawn Movement")
     class White {
 
         @BeforeEach
@@ -40,6 +46,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A white pawn can move one or two squares forward on its first move if no obstacles exist.")
         void testFirstTurn_noObstacles_canMoveTwoForward() {
             // set up
             underTest.setHasMoved(false);
@@ -54,6 +62,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A white pawn cannot move forward if a piece is blocking it on its first move.")
         void testFirstTurn_blocked_cannotMove() {
             // set up
             underTest.setHasMoved(false);
@@ -64,6 +74,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A white pawn can move forward one square if only the second square ahead is blocked.")
         void testFirstTurn_pieceTwoAheadButNotOneAhead_canMoveOne() {
             // set up
             underTest.setHasMoved(false);
@@ -76,6 +88,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("After the first move, a white pawn can only move forward one square if no obstacles exist.")
         void testSecondTurn_noObstacles_canMoveOneForwardOnly() {
             // given
             underTest.setHasMoved(true); // Simulate that the pawn has already moved
@@ -89,6 +103,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A white pawn cannot move if a piece is directly in front of it after its first move.")
         void testSecondTurn_blocked_cannotMove() {
             // given
             underTest.setHasMoved(true);
@@ -99,6 +115,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A white pawn can capture an opponent’s piece diagonally.")
         void testCanCaptureDiagonally_opponentPresent() {
             // given
             underTest.setHasMoved(true);
@@ -114,6 +132,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A white pawn cannot capture diagonally if the space is empty or occupied by an allied piece.")
         void testCannotCaptureDiagonally_emptyOrSameColor() {
             // given
             board.setPiece(new Position(5, 2), new Pawn(Colour.WHITE)); // Same color on left diagonal
@@ -128,6 +148,7 @@ class PawnTest extends PieceTestBase<Pawn> {
     }
 
     @Nested
+    @Story("Black Pawn Movement")
     class Black {
 
         @BeforeEach
@@ -139,6 +160,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A black pawn can move one or two squares forward on its first move if no obstacles exist.")
         void testFirstTurn_noObstacles_canMoveTwoForward() {
             // set up
             underTest.setHasMoved(false);
@@ -153,6 +176,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A black pawn cannot move forward if a piece is blocking it on its first move.")
         void testFirstTurn_blocked_cannotMove() {
             // set up
             underTest.setHasMoved(false);
@@ -163,6 +188,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A black pawn can move forward one square if only the second square ahead is blocked.")
         void testFirstTurn_pieceTwoAheadButNotOneAhead_canMoveOne() {
             // set up
             underTest.setHasMoved(false);
@@ -175,6 +202,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("After the first move, a black pawn can only move forward one square if no obstacles exist.")
         void testSecondTurn_noObstacles_canMoveOneForwardOnly() {
             // given
             underTest.setHasMoved(true); // Simulate that the pawn has already moved
@@ -188,6 +217,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A black pawn cannot move if a piece is directly in front of it after its first move.")
         void testSecondTurn_blocked_cannotMove() {
             // given
             underTest.setHasMoved(true);
@@ -198,6 +229,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A black pawn can capture an opponent’s piece diagonally.")
         void testCanCaptureDiagonally_opponentPresent() {
             // given
             underTest.setHasMoved(true);
@@ -213,6 +246,8 @@ class PawnTest extends PieceTestBase<Pawn> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("A black pawn cannot capture diagonally if the space is empty or occupied by an allied piece.")
         void testCannotCaptureDiagonally_emptyOrSameColor() {
             // given
             board.setPiece(new Position(2, 2), new Pawn(Colour.BLACK)); // Same color on left diagonal

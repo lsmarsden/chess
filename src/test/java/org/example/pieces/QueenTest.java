@@ -1,5 +1,9 @@
 package org.example.pieces;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.example.Colour;
 import org.example.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+@Story("Queen")
 class QueenTest extends PieceTestBase<Queen> {
 
     private Queen underTest = new Queen(Colour.BLACK);
@@ -30,6 +35,7 @@ class QueenTest extends PieceTestBase<Queen> {
     }
 
     @Nested
+    @Story("White Queen Movement")
     class White {
 
         @BeforeEach
@@ -41,6 +47,8 @@ class QueenTest extends PieceTestBase<Queen> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white queen moves correctly when unobstructed")
         void testUnobstructedMovement() {
             // set up
             clearPositions(List.of(
@@ -68,6 +76,8 @@ class QueenTest extends PieceTestBase<Queen> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white queen is blocked by pieces of the same color")
         void testBlockedBySameColour() {
             // set up
             board.setPiece(new Position(3, 3), new Bishop(Colour.WHITE));
@@ -89,6 +99,8 @@ class QueenTest extends PieceTestBase<Queen> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white queen can capture opponent pieces")
         void testCanCaptureOpponent() {
             // set up
             board.setPiece(new Position(3, 3), new Bishop(Colour.BLACK));
@@ -115,6 +127,7 @@ class QueenTest extends PieceTestBase<Queen> {
     }
 
     @Nested
+    @Story("Black Queen Movement")
     class Black {
 
         @BeforeEach
@@ -126,6 +139,8 @@ class QueenTest extends PieceTestBase<Queen> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black queen moves correctly when unobstructed")
         void testUnobstructedMovement() {
             // set up
             clearPositions(List.of(
@@ -153,6 +168,8 @@ class QueenTest extends PieceTestBase<Queen> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black queen is blocked by pieces of the same color")
         void testBlockedBySameColour() {
             // set up
             board.setPiece(new Position(3, 3), new Bishop(Colour.BLACK));
@@ -174,6 +191,8 @@ class QueenTest extends PieceTestBase<Queen> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black queen can capture opponent pieces")
         void testCanCaptureOpponent() {
             // set up
             board.setPiece(new Position(3, 3), new Bishop(Colour.WHITE));

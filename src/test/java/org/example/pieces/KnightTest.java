@@ -1,5 +1,9 @@
 package org.example.pieces;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.example.Colour;
 import org.example.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+@Story("Knight")
 class KnightTest extends PieceTestBase<Knight> {
 
     private Knight underTest = new Knight(Colour.WHITE);
@@ -22,16 +27,19 @@ class KnightTest extends PieceTestBase<Knight> {
     protected String expectedName() {
         return "Knight";
     }
+
     @Override
     protected char expectedSymbol() {
         return 'N';
     }
+
     @Override
     protected boolean shouldBeAbleToJump() {
         return true;
     }
 
     @Nested
+    @Story("White Knight Movement")
     class White {
 
         @BeforeEach
@@ -42,6 +50,8 @@ class KnightTest extends PieceTestBase<Knight> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white knight moves correctly when unobstructed")
         void testUnobstructedMovement() {
             // set up
             // surround knight and validate can still move
@@ -65,6 +75,8 @@ class KnightTest extends PieceTestBase<Knight> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white knight is blocked by pieces of the same color")
         void testBlockedBySameColour() {
             // Place friendly pieces at some valid knight moves
             board.setPiece(new Position(2, 3), new Knight(Colour.WHITE));
@@ -79,6 +91,8 @@ class KnightTest extends PieceTestBase<Knight> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white knight can capture opponent pieces")
         void testCanCaptureOpponent() {
             // Place opponent pieces at some valid knight moves
             board.setPiece(new Position(2, 3), new Knight(Colour.BLACK));
@@ -92,22 +106,10 @@ class KnightTest extends PieceTestBase<Knight> {
                     new Position(6, 5)
             );
         }
-
-        @Test
-        void shouldNotBeBlockedByPiecesInPath() {
-            // set up
-            // surround the knight and make sure it can still move
-
-
-            // exercise
-
-
-            // verify
-
-        }
     }
 
     @Nested
+    @Story("Black Knight Movement")
     class Black {
 
         @BeforeEach
@@ -118,6 +120,8 @@ class KnightTest extends PieceTestBase<Knight> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black knight moves correctly when unobstructed")
         void testUnobstructedMovement() {
             // set up
             // surround knight and validate can still move
@@ -140,6 +144,8 @@ class KnightTest extends PieceTestBase<Knight> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black knight is blocked by pieces of the same color")
         void testBlockedBySameColour() {
             board.setPiece(new Position(2, 3), new Knight(Colour.BLACK));
             board.setPiece(new Position(6, 5), new Knight(Colour.BLACK));
@@ -153,6 +159,8 @@ class KnightTest extends PieceTestBase<Knight> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black knight can capture opponent pieces")
         void testCanCaptureOpponent() {
             board.setPiece(new Position(2, 3), new Knight(Colour.WHITE));
             board.setPiece(new Position(6, 5), new Knight(Colour.WHITE));

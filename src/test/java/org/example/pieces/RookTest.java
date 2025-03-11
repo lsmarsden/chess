@@ -1,5 +1,9 @@
 package org.example.pieces;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.example.Colour;
 import org.example.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+@Story("Rook")
 class RookTest extends PieceTestBase<Rook> {
 
     private Rook underTest = new Rook(Colour.BLACK);
@@ -29,6 +34,7 @@ class RookTest extends PieceTestBase<Rook> {
     }
 
     @Nested
+    @Story("White Rook Movement")
     class White {
 
         @BeforeEach
@@ -40,6 +46,8 @@ class RookTest extends PieceTestBase<Rook> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white bishop moves correctly when unobstructed")
         void testUnobstructedMovement() {
             // set up
             clearPositions(List.of(
@@ -57,6 +65,8 @@ class RookTest extends PieceTestBase<Rook> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white bishop is blocked by pieces of the same color")
         void testBlockedBySameColour() {
             // set up
             board.setPiece(new Position(4, 3), new Rook(Colour.WHITE));
@@ -70,6 +80,8 @@ class RookTest extends PieceTestBase<Rook> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the white bishop can capture opponent pieces")
         void testCanCaptureOpponent() {
             // set up
             board.setPiece(new Position(4, 3), new Rook(Colour.BLACK));
@@ -84,6 +96,7 @@ class RookTest extends PieceTestBase<Rook> {
     }
 
     @Nested
+    @Story("Black Rook Movement")
     class Black {
 
         @BeforeEach
@@ -95,6 +108,8 @@ class RookTest extends PieceTestBase<Rook> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black bishop moves correctly when unobstructed")
         void testUnobstructedMovement() {
             // set up
             clearPositions(List.of(
@@ -112,6 +127,8 @@ class RookTest extends PieceTestBase<Rook> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black bishop is blocked by pieces of the same color")
         void testBlockedBySameColour() {
             // set up
             board.setPiece(new Position(4, 3), new Rook(Colour.BLACK));
@@ -125,6 +142,8 @@ class RookTest extends PieceTestBase<Rook> {
         }
 
         @Test
+        @Severity(SeverityLevel.CRITICAL)
+        @Description("Ensures the black bishop can capture opponent pieces")
         void testCanCaptureOpponent() {
             // set up
             board.setPiece(new Position(4, 3), new Rook(Colour.WHITE));

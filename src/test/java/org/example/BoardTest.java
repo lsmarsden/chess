@@ -1,5 +1,11 @@
 package org.example;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.example.pieces.Bishop;
 import org.example.pieces.Knight;
 import org.example.pieces.Pawn;
@@ -14,11 +20,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Epic("Chess Game")
+@Feature("Board Mechanics")
 class BoardTest {
 
     private Board underTest = new Board();
 
     @Test
+    @Severity(SeverityLevel.BLOCKER)
+    @Story("Initial Board Setup")
+    @Description("Verify that the chessboard initializes correctly with all pieces in their starting positions.")
     void initialSetup() {
         // exercise & verify
         assertThat(underTest.toString()).isEqualTo("""
@@ -34,6 +45,9 @@ class BoardTest {
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("Piece Movement Validation")
+    @Description("Verify that black cannot move a white piece.")
     void blackShouldNotBeAbleToMoveWhitePiece() {
         // set up
         // black attempt to move white's pawn
@@ -44,6 +58,9 @@ class BoardTest {
     }
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("Piece Movement Validation")
+    @Description("Verify that white cannot move a black piece.")
     void whiteShouldNotBeAbleToMoveBlackPiece() {
         // set up
         // white attempt to move black's pawn
@@ -54,6 +71,9 @@ class BoardTest {
     }
 
     @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Story("Piece Collision Prevention")
+    @Description("Verify that a piece cannot move onto a position occupied by another piece of the same color.")
     void shouldNotBeAbleToMovePiecesOntoOwnPieces() {
         // set up
         // attempt to move white's rook onto its own pawn
@@ -64,6 +84,9 @@ class BoardTest {
     }
 
     @Test
+    @Severity(SeverityLevel.MINOR)
+    @Story("Invalid Moves")
+    @Description("Verify that a move is invalid if there is no piece at the from position.")
     void shouldNotMoveIfNoPieceAtFromPosition() {
         // set up
         Move move = new Move(Colour.WHITE, new Position(4, 4), new Position(1, 0));
@@ -73,6 +96,9 @@ class BoardTest {
     }
 
     @Nested
+    @Feature("Path Checking")
+    @Story("Path Clearance")
+    @Severity(SeverityLevel.CRITICAL)
     class IsPathClear {
         @Test
         void testIsPathClear_horizontalRight_noObstacles() {

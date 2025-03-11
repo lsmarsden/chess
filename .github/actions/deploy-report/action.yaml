@@ -36,14 +36,24 @@ runs:
     - name: Regenerate Index.html
       shell: bash
       run: |
-        echo "<!DOCTYPE html>" > reports/index.html  
-        echo "<html><head><title>Test Reports</title></head><body>" >> reports/index.html  
-        echo "<h1>Test Reports</h1><ul>" >> reports/index.html  
-        for d in reports/*/; do  
-          dir=$(basename "$d")  
-          echo "<li><a href='$dir/index.html'>$dir Report</a></li>" >> reports/index.html  
-        done  
-        echo "</ul></body></html>" >> reports/index.html  
+        echo "<!DOCTYPE html>" > reports/index.html
+        echo "<html><head><title>Test Reports</title>" >> reports/index.html
+        echo "<style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        </style></head><body>" >> reports/index.html
+        echo "<h1>Test Reports</h1>" >> reports/index.html
+        echo "<table><tr><th>Report</th><th>Last Updated</th></tr>" >> reports/index.html
+        
+        for d in reports/*/; do
+        dir=$(basename "$d")
+        timestamp=$(stat -c %y "$d" | cut -d' ' -f1) # Get last modified date
+        echo "<tr><td><a href='$dir/index.html'>$dir Report</a></td><td>$timestamp</td></tr>" >> reports/index.html
+        done
+        echo "</table></body></html>" >> reports/index.html
 
     - name: Upload Updated Reports to GitHub Pages
       uses: actions/upload-pages-artifact@v3

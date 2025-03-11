@@ -29,7 +29,7 @@ runs:
         cp -R ${{ inputs.report_path }}/. reports/${{ inputs.report_name }}
         
         # Rename specified report file to index.html
-        if [[ -f "reports/${{ inputs.report_name }}/${{ inputs.report_file }}" ]]; then
+        if [[ -f "reports/${{ inputs.report_name }}/${{ inputs.report_file }}" && "${{ inputs.report_file }}" != "index.html" ]]; then
           mv "reports/${{ inputs.report_name }}/${{ inputs.report_file }}" "reports/${{ inputs.report_name }}/index.html"
         fi
 

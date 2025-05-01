@@ -3,7 +3,7 @@ name: Security Scan
 on:
   schedule:
     - cron: "0 4 * * 1,4"
-
+  workflow_dispatch:
 
 jobs:
   security-scan:
